@@ -16,6 +16,15 @@
 @property (readonly, strong) NSPersistentContainer *persistentContainer;
 
 - (void)saveContext;
+//----------------------------开始------------------------------//
+
+@property float autoSizeScaleX;
+
+@property float autoSizeScaleY;
+
++ (void)iPhoneScreenAdaptation:(UIView *)allView;
+
+//----------------------------结束------------------------------//
 
 
 @end

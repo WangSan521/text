@@ -7,8 +7,15 @@
 //
 
 #import "AppDelegate.h"
-
+#import "ViewController.h"
 @interface AppDelegate ()
+//----------------------------开始------------------------------//
+
+#define ScreenHeight [[UIScreen mainScreen] bounds].size.height
+
+#define ScreenWidth [[UIScreen mainScreen] bounds].size.width
+
+//----------------------------结束------------------------------//
 
 @end
 
@@ -16,9 +23,87 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
-    return YES;
+    // Override point for customization after application launch.    //----------------------------开始------------------------------//
+    
+        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    
+        
+    
+        if (ScreenHeight >480) {
+        
+                myDelegate.autoSizeScaleX = ScreenWidth/320;
+        
+                myDelegate.autoSizeScaleY = ScreenHeight/568;
+        
+            }else{
+            
+                    myDelegate.autoSizeScaleX = 1.0;
+            
+                    myDelegate.autoSizeScaleY = 1.0;
+            
+                }
+    
+        //----------------------------结束------------------------------//
+    
+        self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    
+        self.window.backgroundColor = [UIColor whiteColor];
+    
+        ViewController *view = [[ViewController alloc] init];
+    
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:view];
+    
+        self.window.rootViewController = nav;
+    
+        [self.window makeKeyAndVisible];
+    
+        
+    
+        return YES;
+  
 }
+//----------------------------开始------------------------------//
+
++ (void)iPhoneScreenAdaptation:(UIView *)allView
+
+{
+    
+        for (UIView *temp in allView.subviews) {
+        
+                temp.frame = CGRectMake1(temp.frame.origin.x, temp.frame.origin.y, temp.frame.size.width, temp.frame.size.height);
+        
+                for (UIView *temp1 in temp.subviews) {
+            
+                        temp1.frame = CGRectMake1(temp1.frame.origin.x, temp1.frame.origin.y, temp1.frame.size.width, temp1.frame.size.height);
+            
+                    }
+        
+            }
+    
+}
+
+
+
+//修改CGRectMake
+
+CG_INLINE CGRect
+
+CGRectMake1(CGFloat x, CGFloat y, CGFloat width, CGFloat height)
+
+{
+    
+        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    
+        CGRect rect;
+    
+        rect.origin.x = x * myDelegate.autoSizeScaleX; rect.origin.y = y * myDelegate.autoSizeScaleY;
+    
+        rect.size.width = width * myDelegate.autoSizeScaleX; rect.size.height = height * myDelegate.autoSizeScaleY;
+    
+        return rect;
+    
+}
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
